@@ -2,7 +2,7 @@ require "./ruby_lab"
 
 RSpec.describe "Bigram Counting Self Check" do
   context "Only A Named titles" do
-    process_file("a_tracks.txt")
+    process_file("unique_tracks.txt")
 
     it "Most common word to follow 'happy' is 'now'" do
       expect(mcw 'happy').to eq('now')

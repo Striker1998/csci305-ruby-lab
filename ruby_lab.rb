@@ -9,37 +9,40 @@
 #
 ###############################################################
 
-$bigrams = Hash.new{|hash, key| hash[key] = Hash.new{|hash, key| hash[key] = 0}} # The Bigram data structure
+# The Bigram data structure with a set default value as found on dotnetperls.com to prevent a nil class error
+$bigrams = Hash.new{|hash, key| hash[key] = Hash.new{|hash, key| hash[key] = 0}}
 $name = "Kyle Webster"
 
 # function to process each line of a file and extract the song titles
 def process_file(file_name)
 	puts "Processing File.... "
 	#begin
+	#processes file at each line
 		IO.foreach(file_name) do |line|
-				#cleans up song title
+			#cleans up song title
 			line = cleanup_title(line)
+			#prevents a nil error with a cleaned up song
 			if line != nil
+				#creates an array of bigrams as found on stackoverflow.com
 				bigramArray = line.split.each_cons(2) do |e|
-					first_word = e[0]
-					second_word = e[1]
-					if second_word && first_word != nil
-						count = $bigrams[first_word][second_word]
+					#checks if the bigram exists
+					if e[0] && e[1] != nil
+						#makes a count from the existing bigram hash value
+						count = $bigrams[e[0]][e[1]]
 						count += 1
-						$bigrams[first_word][second_word] = count
+						#sets bigram hash value to updated count
+						$bigrams[e[0]][e[1]] = count
 					end
 				end
 			end
-
-			# do something for each line
 		end
-
 		puts "Finished. Bigram model built.\n"
 		rescue
 		STDERR.puts "Could not open file"
 		exit 4
 	end
 
+#seperates and cleans up song title
 def cleanup_title(line)
 	#deletes everything but the song title
 	line.gsub!(/%.+>/, '')
@@ -50,6 +53,7 @@ def cleanup_title(line)
 		#determines if a word uses english characters or not
 		if line =~ /^[\w\s']+$/
 			line = line.downcase
+		#if not english, sets line to nil
 		else
 			line = nil
 		end
@@ -58,8 +62,33 @@ end
 
 #determines the most common word from a given word
 def mcw(word)
-	p $bigrams[word]
+	p $bigrams
+	mostCommonWord = ''
+	value = 0
+	#determines if a word in a hash happens the most
+	$bigrams[word].each do |x|
+		if x[1] > value
+			mostCommonWord = x[0]
+			value = x[1]
+		end
+	end
 	return mostCommonWord
+end
+
+def create_title(word)
+	songTitle = ''
+	songTitle = songTitle + word
+	inWord = ''
+	inWord = word
+	(0..19).each do
+		inWord = mcw(inWord)
+		if inWord == ''
+			return songTitle
+		else
+		songTitle = songTitle + " " + inWord
+	end
+	end
+	return songTitle
 end
 # Executes the program
 def main_loop()
