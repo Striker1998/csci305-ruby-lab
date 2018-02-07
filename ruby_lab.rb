@@ -45,7 +45,7 @@ def process_file(file_name)
 #seperates and cleans up song title
 def cleanup_title(line)
 	#deletes everything but the song title
-	line.gsub!(/%.+>/, '')
+	line.gsub!(/.+>/, '')
 	#deletes superfluous text
 	line.gsub!(/(\(|\[|\{|\\|\/|\_|\-|\:|\"|\`|\+|\=|\*|feat\.).+$/,'')
 	#deletes punctuation
@@ -62,7 +62,6 @@ end
 
 #determines the most common word from a given word
 def mcw(word)
-	p $bigrams
 	mostCommonWord = ''
 	value = 0
 	#determines if a word in a hash happens the most
@@ -80,7 +79,7 @@ def create_title(word)
 	songTitle = songTitle + word
 	inWord = ''
 	inWord = word
-	(0..19).each do
+	(0..18).each do
 		inWord = mcw(inWord)
 		if inWord == ''
 			return songTitle
@@ -102,9 +101,16 @@ def main_loop()
 	# process the file
 	process_file(ARGV[0])
 
-	# Get user input
-end
+	begin
+		# Get user input
+		print "Enter a word [Enter 'q' to quit]:"
+		word = gets
+		if word != 'q'
+			create_title(word)
+		end
+	end until input == 'q'
 
 if __FILE__==$0
 	main_loop()
+end
 end
