@@ -1,7 +1,9 @@
 Kyle Webster
 CSCI-305
 
-10. 
+10. For 10 of the tested 15 words, I see the phrase "the world is a little girl in" showing up over and over again for anytime 'the' is used.
+    That phrase demonstrates an issue with the create_title method as once a common word is used, then it sends the rest of the title into a loop
+    of words. 
 
 14.
 
