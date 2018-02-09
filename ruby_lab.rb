@@ -73,24 +73,44 @@ def cleanup_title(line)
 		mostCommonWord = ''
 		value = 0
 		#determines if a word in a hash happens the most
+		#p $bigrams[word]
 		$bigrams[word].each do |x|
 			if x[1] > value
 				mostCommonWord = x[0]
 				value = x[1]
+
+			#if two hashes have the same value, then randomly chooses between the two
+			elsif x[1] == value
+				choice = Random.rand(2)
+				if choice == 1
+					mostCommonWord = x[0]
+					value = x[1]
+				end
 			end
 		end
 		return mostCommonWord
 	end
 
+	#creates a title with a starting word
 	def create_title(word)
+		#prevents Nil.class errors
 		songTitle = ''
+		#sets first word in title
 		songTitle = songTitle + word
 		inWord = ''
 		inWord = word
-		(0..18).each do
+		#while loop set to 100000 to create a loop as a failsafe, but a song title should never get anywhere close to that large.
+		(0..100000).each do
+			#determines the word returned when calling mcw
 			inWord = mcw(inWord)
+			#checks if songTitle starts repeating itself: .scan() function discovered on stackoverflow
+			if songTitle.scan(/#{inWord}/).length == 1
+				return songTitle
+			end
+			#in mcw returns '', then ends the function
 			if inWord == ''
 				return songTitle
+			#concatenates returned mcw() word to the song title
 			else
 				songTitle = songTitle + " " + inWord
 			end
@@ -114,7 +134,7 @@ def cleanup_title(line)
 		#prevents Nil Class errors
 		word = ''
 
-		#waits until the types phrase is q
+		#inputs until the typed phrase is q
 		while word != "q"
 			word = STDIN.gets
 			word ||= ''
