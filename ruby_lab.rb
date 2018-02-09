@@ -117,6 +117,7 @@ def cleanup_title(line)
 		end
 		return songTitle
 	end
+	
 	# Executes the program
 	def main_loop()
 		puts "CSCI 305 Ruby Lab submitted by #{$name}"
@@ -137,6 +138,7 @@ def cleanup_title(line)
 		#inputs until the typed phrase is q
 		while word != "q"
 			word = STDIN.gets
+			#sets any nil input to ''
 			word ||= ''
 			word.chomp!
 			if word != 'q'
