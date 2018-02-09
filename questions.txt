@@ -14,6 +14,11 @@ CSCI-305
     regular expression to be inputted into .scan(). I then checked the length of the found words and determined that if the length was = 1, since if scan finds 1 regular expression then it returns 0,
     then I would return the title in it's current state and left create_title(). This prevents the chance for repeats, but will fail if the most common word has multiple possibilities.
 
+17. Possible outcomes: "montana sacra nova scotia" and "montana sacra nova baby i love you are"
+
+18. Possible outcomes: "bob marley song you are", "bob marley vs world is my heart", "bob marley me down road blues night long way you are",
+    "bob marley purt drive me down road blues night long way you are", and "bob marley medley 1 2"
+
 19. Using "bob", I get many different titles. The program finds many different titles because of the randomness associated to words with songs that occur in an equal amount of bigrams. In this case;
     song, vs, me, purt, and medley follow "marley" an equal amount of times.
 
@@ -28,4 +33,4 @@ CSCI-305
 
 24. On coding and debugging, about 7 hours. On researching and trying to find the tools that I needed, I would estimate around 4 hours. On just trying to understand the Nil class errors, easily 2-3 hours.
 
-25. I think I would use ruby or ruby-like languages on a regular basis now. I will mostly use it for data manipulation or processes that don't require a low level language. 
+25. I think I would use ruby or ruby-like languages on a regular basis now. I will mostly use it for data manipulation or processes that don't require a low level language.
